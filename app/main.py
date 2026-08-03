@@ -5,19 +5,33 @@ from sqlalchemy.orm import Session
 
 from app.database import engine, Base, get_db
 from app.security import get_current_user, require_roles
+
+# Import Models
+from app.models.user import User
+from app.models.employee import Employee
+
+# User CRUD
 from app.crud.user import (
     get_users,
     get_user_by_id,
     update_user,
     delete_user,
 )
+
+# User Schemas
 from app.schemas.user import UserUpdate, UserResponse
+
+# Services
 from app.services.user_service import profile_service
 
+# Controllers
 from app.controllers import auth
+from app.controllers import employee
+
 
 print("Models Loaded:", Base.metadata.tables.keys())
 
+# Create all database tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -26,7 +40,9 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Register Routers
 app.include_router(auth.router)
+app.include_router(employee.router)
 
 
 @app.get(
