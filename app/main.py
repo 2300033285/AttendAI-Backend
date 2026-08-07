@@ -9,6 +9,15 @@ from app.security import get_current_user, require_roles
 # Import Models
 from app.models.user import User
 from app.models.employee import Employee
+from app.models.attendance import Attendance
+from app.controllers import dashboard
+from app.controllers import reports
+from app.controllers import analytics
+from app.controllers import employee_analytics
+from app.controllers import employee_analytics
+from app.controllers import ai_prediction
+from app.controllers import insights
+from app.controllers import anomaly
 
 # User CRUD
 from app.crud.user import (
@@ -27,6 +36,7 @@ from app.services.user_service import profile_service
 # Controllers
 from app.controllers import auth
 from app.controllers import employee
+from app.controllers import attendance
 
 
 print("Models Loaded:", Base.metadata.tables.keys())
@@ -43,7 +53,15 @@ app = FastAPI(
 # Register Routers
 app.include_router(auth.router)
 app.include_router(employee.router)
-
+app.include_router(attendance.router)
+app.include_router(dashboard.router)
+app.include_router(reports.router)
+app.include_router(analytics.router)
+app.include_router(employee_analytics.router)
+app.include_router(employee_analytics.router)
+app.include_router(ai_prediction.router)
+app.include_router(insights.router)
+app.include_router(anomaly.router)
 
 @app.get(
     "/",
